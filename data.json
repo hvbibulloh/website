@@ -1,0 +1,351 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "Magnat API",
+    "description": "Official web site for Magnat IT Comapany",
+    "termsOfService": "https://t.me/Rozievich",
+    "contact": { "email": "oybekrozievich@gmail.com" },
+    "license": { "name": "BSD License" },
+    "version": "v1.0"
+  },
+  "host": "37.1.198.166",
+  "schemes": ["http"],
+  "basePath": "/api",
+  "consumes": ["application/json"],
+  "produces": ["application/json"],
+  "securityDefinitions": { "Basic": { "type": "basic" } },
+  "security": [{ "Basic": [] }],
+  "paths": {
+    "/client/": {
+      "post": {
+        "operationId": "client_create",
+        "description": "",
+        "parameters": [
+          {
+            "name": "ism",
+            "in": "formData",
+            "required": true,
+            "type": "string",
+            "maxLength": 80,
+            "minLength": 1
+          },
+          {
+            "name": "tel_nomer",
+            "in": "formData",
+            "required": true,
+            "type": "string",
+            "maxLength": 13,
+            "minLength": 1
+          },
+          {
+            "name": "tex_zadacha",
+            "in": "formData",
+            "required": false,
+            "type": "file",
+            "x-nullable": true
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "",
+            "schema": { "$ref": "#/definitions/ClientModel" }
+          }
+        },
+        "consumes": ["multipart/form-data"],
+        "tags": ["client"]
+      },
+      "parameters": []
+    },
+    "/comment/": {
+      "get": {
+        "operationId": "comment_list",
+        "description": "",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "type": "array",
+              "items": { "$ref": "#/definitions/CommentModel" }
+            }
+          }
+        },
+        "tags": ["comment"]
+      },
+      "post": {
+        "operationId": "comment_create",
+        "description": "",
+        "parameters": [
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": { "$ref": "#/definitions/CommentModel" }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "",
+            "schema": { "$ref": "#/definitions/CommentModel" }
+          }
+        },
+        "tags": ["comment"]
+      },
+      "parameters": []
+    },
+    "/comment/{id}/": {
+      "get": {
+        "operationId": "comment_read",
+        "description": "",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": { "$ref": "#/definitions/CommentModel" }
+          }
+        },
+        "tags": ["comment"]
+      },
+      "parameters": [
+        {
+          "name": "id",
+          "in": "path",
+          "description": "A unique integer value identifying this comment.",
+          "required": true,
+          "type": "integer"
+        }
+      ]
+    },
+    "/media/": {
+      "get": {
+        "operationId": "media_list",
+        "description": "",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "type": "array",
+              "items": { "$ref": "#/definitions/MediaModel" }
+            }
+          }
+        },
+        "consumes": ["multipart/form-data"],
+        "tags": ["media"]
+      },
+      "parameters": []
+    },
+    "/media/{id}/": {
+      "get": {
+        "operationId": "media_read",
+        "description": "",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": { "$ref": "#/definitions/MediaModel" }
+          }
+        },
+        "consumes": ["multipart/form-data"],
+        "tags": ["media"]
+      },
+      "parameters": [
+        {
+          "name": "id",
+          "in": "path",
+          "description": "A unique integer value identifying this media.",
+          "required": true,
+          "type": "integer"
+        }
+      ]
+    },
+    "/staff/": {
+      "get": {
+        "operationId": "staff_list",
+        "description": "",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "type": "array",
+              "items": { "$ref": "#/definitions/WorkerModel" }
+            }
+          }
+        },
+        "consumes": ["multipart/form-data"],
+        "tags": ["staff"]
+      },
+      "parameters": []
+    },
+    "/staff/{id}/": {
+      "get": {
+        "operationId": "staff_read",
+        "description": "",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": { "$ref": "#/definitions/WorkerModel" }
+          }
+        },
+        "consumes": ["multipart/form-data"],
+        "tags": ["staff"]
+      },
+      "parameters": [
+        {
+          "name": "id",
+          "in": "path",
+          "description": "A unique integer value identifying this worker.",
+          "required": true,
+          "type": "integer"
+        }
+      ]
+    }
+  },
+  "definitions": {
+    "ClientModel": {
+      "required": ["ism", "tel_nomer"],
+      "type": "object",
+      "properties": {
+        "id": { "title": "ID", "type": "integer", "readOnly": true },
+        "status": { "title": "Status", "type": "string", "readOnly": true },
+        "sabab": { "title": "Sabab", "type": "string", "readOnly": true },
+        "sana": { "title": "Sana", "type": "string", "readOnly": true },
+        "ism": {
+          "title": "Ism",
+          "type": "string",
+          "maxLength": 80,
+          "minLength": 1
+        },
+        "tel_nomer": {
+          "title": "Tel nomer",
+          "type": "string",
+          "maxLength": 13,
+          "minLength": 1
+        },
+        "tex_zadacha": {
+          "title": "Tex zadacha",
+          "type": "string",
+          "readOnly": true,
+          "x-nullable": true,
+          "format": "uri"
+        },
+        "created_at": {
+          "title": "Created at",
+          "type": "string",
+          "format": "date-time",
+          "readOnly": true
+        },
+        "update_at": {
+          "title": "Update at",
+          "type": "string",
+          "format": "date-time",
+          "readOnly": true
+        }
+      }
+    },
+    "CommentModel": {
+      "required": ["ism", "summary"],
+      "type": "object",
+      "properties": {
+        "id": { "title": "ID", "type": "integer", "readOnly": true },
+        "status": { "title": "Status", "type": "string", "readOnly": true },
+        "ism": {
+          "title": "Ism",
+          "type": "string",
+          "maxLength": 80,
+          "minLength": 1
+        },
+        "summary": {
+          "title": "Summary",
+          "type": "string",
+          "maxLength": 400,
+          "minLength": 1
+        },
+        "created_at": {
+          "title": "Created at",
+          "type": "string",
+          "format": "date-time",
+          "readOnly": true
+        }
+      }
+    },
+    "MediaModel": {
+      "required": ["title", "category"],
+      "type": "object",
+      "properties": {
+        "id": { "title": "ID", "type": "integer", "readOnly": true },
+        "media": {
+          "title": "Media",
+          "type": "string",
+          "readOnly": true,
+          "x-nullable": true,
+          "format": "uri"
+        },
+        "youtube_url": {
+          "title": "Youtube url",
+          "type": "string",
+          "format": "uri",
+          "maxLength": 200,
+          "x-nullable": true
+        },
+        "title": {
+          "title": "Title",
+          "type": "string",
+          "maxLength": 200,
+          "minLength": 1
+        },
+        "created_at": {
+          "title": "Created at",
+          "type": "string",
+          "format": "date-time",
+          "readOnly": true
+        },
+        "update_at": {
+          "title": "Update at",
+          "type": "string",
+          "format": "date-time",
+          "readOnly": true
+        },
+        "category": { "title": "Category", "type": "integer" }
+      }
+    },
+    "WorkerModel": {
+      "required": ["name"],
+      "type": "object",
+      "properties": {
+        "id": { "title": "ID", "type": "integer", "readOnly": true },
+        "picture": {
+          "title": "Picture",
+          "type": "string",
+          "readOnly": true,
+          "format": "uri"
+        },
+        "name": {
+          "title": "Name",
+          "type": "string",
+          "maxLength": 80,
+          "minLength": 1
+        },
+        "familiya": {
+          "title": "Familiya",
+          "type": "string",
+          "maxLength": 80,
+          "x-nullable": true
+        },
+        "sohasi": {
+          "title": "Sohasi",
+          "type": "integer",
+          "enum": [1, 2, 3, 4, 5]
+        },
+        "created_at": {
+          "title": "Created at",
+          "type": "string",
+          "format": "date-time",
+          "readOnly": true
+        }
+      }
+    }
+  }
+}
